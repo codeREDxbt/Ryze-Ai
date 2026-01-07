@@ -76,6 +76,15 @@ Ryze AI is a modern, high-performance web application for AI-powered advertising
    http://localhost:5173
    ```
 
+### Deployment (SPA routing)
+
+If deploying to Vercel or Netlify, enable SPA rewrites so deep links like `/features` work:
+
+- Vercel: `vercel.json` includes rewrites to serve `index.html` for all paths.
+- Netlify: `public/_redirects` contains `/* /index.html 200` for client-side routing.
+
+After pushing, trigger a redeploy in your hosting provider.
+
 ---
 
 ## 🚀 Available Scripts
