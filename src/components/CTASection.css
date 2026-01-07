@@ -1,0 +1,109 @@
+/* CTA Section Styles */
+.cta-section {
+    position: relative;
+    overflow: hidden;
+    padding: var(--space-16) 0;
+}
+
+.cta-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cta-text {
+    margin-bottom: var(--space-6);
+}
+
+.cta-text h2 {
+    margin-bottom: var(--space-3);
+}
+
+.cta-text p {
+    font-size: var(--font-size-lg);
+}
+
+.cta-actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-extra {
+    margin-top: var(--space-6);
+}
+
+/* Gradient Variant */
+.cta-gradient {
+    background: linear-gradient(135deg,
+            rgba(16, 185, 129, 0.1) 0%,
+            rgba(52, 211, 153, 0.05) 100%);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.cta-gradient::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle,
+            rgba(16, 185, 129, 0.15) 0%,
+            transparent 70%);
+    pointer-events: none;
+}
+
+/* Dark Variant */
+.cta-dark {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-2xl);
+    margin-left: var(--space-6);
+    margin-right: var(--space-6);
+    padding: var(--space-16);
+}
+
+/* Split Variant */
+.cta-split .cta-content {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-8);
+    align-items: center;
+    text-align: left;
+    max-width: 100%;
+}
+
+.cta-split .cta-text {
+    margin-bottom: 0;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+    .cta-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .cta-actions .btn {
+        justify-content: center;
+    }
+
+    .cta-dark {
+        margin-left: var(--space-4);
+        margin-right: var(--space-4);
+        padding: var(--space-8);
+    }
+
+    .cta-split .cta-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .cta-split .cta-actions {
+        justify-content: center;
+    }
+}

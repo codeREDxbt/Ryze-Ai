@@ -1,0 +1,355 @@
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, Sun, Moon } from 'lucide-react';
+import DemoModal from './DemoModal';
+import './ResizableNavbar.css';
+
+/**
+ * ResizableNavbar - Navbar that shrinks on scroll
+ * Inspired by Aceternity UI
+ */
+export function Navbar({ children, className = '' }) {
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    return (
+        <header
+            className={`resizable-navbar ${isScrolled ? 'scrolled' : ''} ${className}`}
+        >
+            <div
+                className={`navbar-container ${isScrolled ? 'navbar-scrolled' : ''}`}
+                style={{
+                    padding: isScrolled ? '0.5rem 1.5rem' : '1rem 1.5rem',
+                }}
+            >
+                {children}
+            </div>
+        </header>
+    );
+}
+
+export function NavBody({ children, className = '' }) {
+    return (
+        <div className={`nav-body ${className}`}>
+            {children}
+        </div>
+    );
+}
+
+export function NavItems({ items, className = '', onItemClick }) {
+    const location = useLocation();
+
+    const handleNavClick = (e, item) => {
+        e.preventDefault();
+
+        const [path, hash] = item.link.split('#');
+        const targetPath = path || '/';
+        const isCurrentPage = location.pathname === targetPath;
+
+        // If on the same page
+        if (isCurrentPage) {
+            if (hash) {
+                // Scroll to section with smooth animation
+                setTimeout(() => {
+                    const element = document.getElementById(hash);
+                    if (element) {
+                        element.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start',
+                            inline: 'nearest'
+                        });
+                    }
+                }, 100);
+            } else {
+                // Scroll to top smoothly
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        } else {
+            // Navigate to different page
+            window.location.href = item.link;
+
+            // After navigation, handle scroll
+            if (!hash) {
+                // If no hash, scroll to top after page loads
+                setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 100);
+            }
+        }
+
+        if (onItemClick) onItemClick();
+    };
+
+    return (
+        <nav className={`nav-items ${className}`}>
+            {items.map((item, index) => (
+                <Link
+                    key={index}
+                    to={item.link}
+                    className={`nav-item ${location.pathname === item.link.split('#')[0] ? 'nav-item-active' : ''}`}
+                    onClick={(e) => handleNavClick(e, item)}
+                >
+                    {item.name}
+                </Link>
+            ))}
+        </nav>
+    );
+}
+
+export function MobileNav({ children, className = '', visible }) {
+    return (
+        <AnimatePresence>
+            {visible && (
+                <motion.div
+                    className={`mobile-nav-panel ${className}`}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.2 }}
+                >
+                    {children}
+                </motion.div>
+            )}
+        </AnimatePresence>
+    );
+}
+
+export function MobileNavHeader({ children, className = '' }) {
+    return (
+        <div className={`mobile-nav-header ${className}`}>
+            {children}
+        </div>
+    );
+}
+
+export function MobileNavMenu({ children, className = '', visible, onClose }) {
+    return (
+        <div className={`mobile-nav-menu ${className}`}>
+            {children}
+        </div>
+    );
+}
+
+export function MobileNavToggle({ isOpen, onClick }) {
+    return (
+        <button
+            className="mobile-nav-toggle"
+            onClick={onClick}
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isOpen}
+        >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+    );
+}
+
+export function NavbarButton({ href, as: Component = 'a', children, className = '', variant = 'primary', onClick }) {
+    const buttonClass = `navbar-button navbar-button-${variant} ${className}`;
+
+    // If onClick is provided, it's a button action (like opening modal)
+    if (onClick) {
+        return (
+            <button className={buttonClass} onClick={onClick}>
+                {children}
+            </button>
+        );
+    }
+
+    if (Component === 'a' || Component === Link) {
+        return (
+            <Link to={href} className={buttonClass}>
+                {children}
+            </Link>
+        );
+    }
+
+    return (
+        <Component className={buttonClass}>
+            {children}
+        </Component>
+    );
+}
+
+export function NavbarLogo({ children, className = '' }) {
+    const location = useLocation();
+
+    const handleClick = (e) => {
+        e.preventDefault();
+
+        if (location.pathname === '/') {
+            // If already on homepage, scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            // Navigate to homepage
+            window.location.href = '/';
+        }
+    };
+
+    return (
+        <Link to="/" className={`navbar-logo ${className}`} onClick={handleClick}>
+            {children}
+        </Link>
+    );
+}
+
+export function ThemeToggle({ isDark, onToggle }) {
+    return (
+        <button
+            className="navbar-theme-toggle"
+            onClick={onToggle}
+            aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+        >
+            {isDark ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
+    );
+}
+
+/**
+ * Complete ResizableNavbar with all features
+ */
+export default function ResizableNavbar() {
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isDarkTheme, setIsDarkTheme] = useState(true);
+    const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
+    const location = useLocation();
+
+    // Initialize theme from localStorage
+    useEffect(() => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            setIsDarkTheme(false);
+            document.documentElement.classList.add('light-theme');
+        } else {
+            setIsDarkTheme(true);
+            document.documentElement.classList.remove('light-theme');
+        }
+    }, []);
+
+    // Apply theme changes
+    useEffect(() => {
+        if (isDarkTheme) {
+            document.documentElement.classList.remove('light-theme');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.classList.add('light-theme');
+            localStorage.setItem('theme', 'light');
+        }
+    }, [isDarkTheme]);
+
+    useEffect(() => {
+        setIsMobileMenuOpen(false);
+
+        // Scroll to top or hash on route change
+        const hash = location.hash.substring(1); // Remove # symbol
+        if (hash) {
+            // Wait for page to render, then scroll to section
+            setTimeout(() => {
+                const element = document.getElementById(hash);
+                if (element) {
+                    element.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                        inline: 'nearest'
+                    });
+                }
+            }, 300);
+        } else {
+            // Scroll to top smoothly on route change
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }, [location]);
+
+    // Prevent body scroll when modal is open
+    useEffect(() => {
+        if (isDemoModalOpen) {
+            document.body.classList.add('modal-open');
+        } else {
+            document.body.classList.remove('modal-open');
+        }
+        return () => {
+            document.body.classList.remove('modal-open');
+        };
+    }, [isDemoModalOpen]);
+
+    const handleOpenDemoModal = () => {
+        setIsDemoModalOpen(true);
+        setIsMobileMenuOpen(false);
+    };
+
+    const navItems = [
+        { name: 'Features', link: '/features' },
+        { name: 'Pricing', link: '/pricing' },
+        { name: 'Reviews', link: '/#testimonials' },
+    ];
+
+    return (
+        <>
+            <Navbar>
+                <NavBody>
+                    <NavbarLogo>
+                        <svg viewBox="0 0 120 32" className="logo-svg" aria-hidden="true">
+                            <defs>
+                                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stopColor="#10b981" />
+                                    <stop offset="100%" stopColor="#34d399" />
+                                </linearGradient>
+                            </defs>
+                            <path
+                                d="M4 4h12l-4 12h8l-12 12 4-12H4l8-12z"
+                                fill="url(#logoGradient)"
+                            />
+                            <text x="28" y="22" fill="currentColor" fontSize="18" fontWeight="800">
+                                RYZE
+                            </text>
+                            <text x="78" y="22" fill="var(--accent-color)" fontSize="18" fontWeight="800">
+                                AI
+                            </text>
+                        </svg>
+                    </NavbarLogo>
+
+                    <NavItems items={navItems} />
+
+                    <div className="navbar-actions">
+                        <ThemeToggle
+                            isDark={isDarkTheme}
+                            onToggle={() => setIsDarkTheme(!isDarkTheme)}
+                        />
+                        <NavbarButton variant="primary" onClick={handleOpenDemoModal}>
+                            Book a Demo
+                        </NavbarButton>
+                        <MobileNavToggle
+                            isOpen={isMobileMenuOpen}
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        />
+                    </div>
+                </NavBody>
+
+                <MobileNav visible={isMobileMenuOpen}>
+                    <MobileNavMenu visible={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)}>
+                        <NavItems
+                            items={navItems}
+                            className="mobile-nav-items"
+                            onItemClick={() => setIsMobileMenuOpen(false)}
+                        />
+                        <NavbarButton variant="primary" className="mobile-demo-btn" onClick={handleOpenDemoModal}>
+                            Book a Demo
+                        </NavbarButton>
+                    </MobileNavMenu>
+                </MobileNav>
+            </Navbar>
+
+            <DemoModal
+                isOpen={isDemoModalOpen}
+                onClose={() => setIsDemoModalOpen(false)}
+            />
+        </>
+    );
+}

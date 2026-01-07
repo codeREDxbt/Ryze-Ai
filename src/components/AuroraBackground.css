@@ -1,0 +1,157 @@
+/* ===================================
+   Aurora Background Component
+   Inspired by Aceternity UI
+   =================================== */
+
+.aurora-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: var(--background);
+    transition: background 200ms ease-out;
+    z-index: -1;
+}
+
+.aurora-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 200ms ease-out;
+}
+
+.aurora-layer {
+    position: absolute;
+    inset: -50%;
+    opacity: 0.3;
+    filter: blur(120px);
+    will-change: transform;
+    transition: opacity 200ms ease-out, filter 200ms ease-out;
+}
+
+.aurora-mask {
+    mask-image: none;
+    -webkit-mask-image: none;
+}
+
+.aurora-glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: 400% 400%;
+    mix-blend-mode: screen;
+}
+
+/* Dark theme colors - Emerald, Cyan, Purple */
+.aurora-glow-1 {
+    top: 0;
+    left: 0;
+    background: linear-gradient(135deg,
+            rgba(16, 185, 129, 0.5) 0%,
+            rgba(20, 184, 166, 0.4) 25%,
+            rgba(6, 182, 212, 0.3) 50%,
+            rgba(16, 185, 129, 0.5) 75%,
+            rgba(5, 150, 105, 0.4) 100%);
+}
+
+.aurora-glow-2 {
+    top: 30%;
+    left: 20%;
+    background: linear-gradient(225deg,
+            rgba(99, 102, 241, 0.4) 0%,
+            rgba(139, 92, 246, 0.5) 25%,
+            rgba(124, 58, 237, 0.3) 50%,
+            rgba(99, 102, 241, 0.4) 75%,
+            rgba(79, 70, 229, 0.5) 100%);
+}
+
+.aurora-glow-3 {
+    top: -20%;
+    right: 0;
+    background: linear-gradient(45deg,
+            rgba(6, 182, 212, 0.3) 0%,
+            rgba(34, 211, 238, 0.4) 25%,
+            rgba(103, 232, 249, 0.2) 50%,
+            rgba(6, 182, 212, 0.3) 75%,
+            rgba(8, 145, 178, 0.4) 100%);
+}
+
+.aurora-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Light theme - Softer, warmer colors */
+.light-theme .aurora-background {
+    background: var(--background);
+}
+
+.light-theme .aurora-layer {
+    opacity: 0.15;
+    filter: blur(140px);
+}
+
+.light-theme .aurora-glow-1 {
+    background: linear-gradient(135deg,
+            rgba(16, 185, 129, 0.15) 0%,
+            rgba(52, 211, 153, 0.12) 25%,
+            rgba(110, 231, 183, 0.08) 50%,
+            rgba(16, 185, 129, 0.15) 75%,
+            rgba(5, 150, 105, 0.12) 100%);
+}
+
+.light-theme .aurora-glow-2 {
+    background: linear-gradient(225deg,
+            rgba(99, 102, 241, 0.12) 0%,
+            rgba(139, 92, 246, 0.15) 25%,
+            rgba(167, 139, 250, 0.08) 50%,
+            rgba(99, 102, 241, 0.12) 75%,
+            rgba(79, 70, 229, 0.15) 100%);
+}
+
+.light-theme .aurora-glow-3 {
+    background: linear-gradient(45deg,
+            rgba(251, 191, 36, 0.08) 0%,
+            rgba(252, 211, 77, 0.12) 25%,
+            rgba(254, 240, 138, 0.06) 50%,
+            rgba(251, 191, 36, 0.08) 75%,
+            rgba(245, 158, 11, 0.12) 100%);
+}
+
+/* Ensure content is visible */
+.aurora-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.aurora-content > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* Animation performance optimization */
+@media (prefers-reduced-motion: reduce) {
+    .aurora-glow {
+        animation: none !important;
+    }
+}
+
+/* Enhance visibility on mobile */
+@media (max-width: 768px) {
+    .aurora-layer {
+        filter: blur(100px);
+        opacity: 0.25;
+    }
+    
+    .light-theme .aurora-layer {
+        opacity: 0.12;
+    }
+}

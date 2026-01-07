@@ -1,0 +1,100 @@
+/* ===================================
+   BorderBeam Animation Styles
+   Enhanced version inspired by badtz-ui
+   =================================== */
+
+.border-beam {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    overflow: hidden;
+    z-index: 0;
+}
+
+/* The rotating gradient beam */
+.border-beam::before {
+    content: '';
+    position: absolute;
+    inset: calc(-1 * var(--light-width, 200px));
+    background: conic-gradient(from 180deg at 50% 50%,
+            transparent 0deg,
+            var(--light-color, #FAFAFA) 30deg,
+            var(--color-from, var(--accent-color)) 60deg,
+            var(--color-to, var(--accent-hover)) 90deg,
+            transparent 120deg);
+    animation: borderBeamRotate var(--duration, 10s) linear infinite;
+    animation-delay: var(--delay, 0s);
+}
+
+/* Inner mask to create border effect */
+.border-beam::after {
+    content: '';
+    position: absolute;
+    inset: var(--border-width, 1px);
+    border-radius: inherit;
+    background: var(--card-bg);
+    z-index: 1;
+}
+
+@keyframes borderBeamRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Glow effect layer */
+.border-beam-glow {
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: linear-gradient(135deg,
+            var(--color-from) 0%,
+            var(--color-to) 50%,
+            var(--color-from) 100%);
+    opacity: 0.3;
+    filter: blur(8px);
+    animation: borderGlowPulse 3s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes borderGlowPulse {
+
+    0%,
+    100% {
+        opacity: 0.2;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* Container setup for elements with BorderBeam */
+.has-border-beam {
+    position: relative;
+    overflow: hidden;
+}
+
+.has-border-beam>*:not(.border-beam) {
+    position: relative;
+    z-index: 2;
+}
+
+/* Light theme adjustments */
+.light-theme .border-beam::after {
+    background: var(--card-bg);
+}
+
+.light-theme .border-beam::before {
+    background: conic-gradient(from 180deg at 50% 50%,
+            transparent 0deg,
+            rgba(16, 185, 129, 0.3) 30deg,
+            var(--color-from, var(--accent-color)) 60deg,
+            var(--color-to, var(--accent-hover)) 90deg,
+            transparent 120deg);
+}

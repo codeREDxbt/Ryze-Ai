@@ -1,0 +1,113 @@
+/* Pricing Page Styles */
+.pricing-page {
+    overflow-x: hidden;
+}
+
+.pricing-page .hero {
+    min-height: auto;
+    padding-bottom: 0;
+}
+
+/* Pricing Cards Grid */
+.pricing-cards-section {
+    margin-top: calc(var(--space-12) * -1);
+    padding: var(--space-12) 0;
+}
+
+.pricing-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Comparison Table */
+.comparison-table-section {
+    background: var(--background-secondary);
+    padding: var(--space-12) 0;
+}
+
+.comparison-table-wrapper {
+    overflow-x: auto;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: var(--space-4) var(--space-6);
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.comparison-table th:first-child,
+.comparison-table td:first-child {
+    text-align: left;
+}
+
+.comparison-table thead th {
+    background: var(--background-secondary);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+}
+
+.comparison-table th.popular,
+.comparison-table td.popular {
+    background: rgba(16, 185, 129, 0.05);
+}
+
+.comparison-table th.popular {
+    color: var(--accent-color);
+}
+
+.comparison-table tbody td {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.comparison-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.comparison-table .check {
+    color: var(--accent-color);
+}
+
+.comparison-table .cross {
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+    .pricing-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pricing-cards-grid> :last-child {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 767px) {
+    .pricing-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pricing-cards-grid> :last-child {
+        grid-column: span 1;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: var(--space-3) var(--space-4);
+    }
+}

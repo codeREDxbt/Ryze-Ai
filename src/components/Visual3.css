@@ -1,0 +1,213 @@
+/* ===================================
+   Visual3 Component
+   Animated card visual with orbiting circles
+   Inspired by badtz-ui and wope.com
+   =================================== */
+
+.visual-3 {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Background Grid */
+.visual-3-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 20px 20px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+
+/* Gradient Background */
+.visual-3-gradient {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 100%,
+            var(--main-color),
+            transparent);
+    opacity: 0.15;
+    transition: opacity 0.3s ease;
+}
+
+.animated-card:hover .visual-3-gradient {
+    opacity: 0.3;
+}
+
+/* Central Glow */
+.visual-3-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle,
+            var(--main-color) 0%,
+            var(--secondary-color) 40%,
+            transparent 70%);
+    transform: translate(-50%, -50%);
+    filter: blur(30px);
+    opacity: 0.4;
+    transition: all 0.5s ease;
+}
+
+.animated-card:hover .visual-3-glow {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1.3);
+}
+
+/* Orbiting Circles */
+.visual-3-orbit {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.visual-3-orbit-1 {
+    top: 30%;
+    left: 25%;
+}
+
+.visual-3-orbit-2 {
+    top: 40%;
+    right: 20%;
+}
+
+.visual-3-orbit-3 {
+    bottom: 30%;
+    left: 40%;
+}
+
+.visual-3-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--main-color), var(--secondary-color));
+    box-shadow:
+        0 0 30px var(--main-color),
+        0 0 60px rgba(16, 185, 129, 0.3);
+}
+
+.visual-3-circle-secondary {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--main-color));
+}
+
+.visual-3-circle-small {
+    width: 20px;
+    height: 20px;
+}
+
+/* Data Visualization Bars */
+.visual-3-bars {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 60px;
+    z-index: 1;
+}
+
+.visual-3-bar {
+    width: 8px;
+    height: 60px;
+    background: linear-gradient(to top, var(--main-color), var(--secondary-color));
+    border-radius: 4px;
+    transform-origin: bottom;
+    opacity: 0.8;
+    box-shadow: 0 0 10px var(--main-color);
+}
+
+.animated-card:hover .visual-3-bar {
+    animation: barPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes barPulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: scaleY(var(--bar-height));
+    }
+
+    50% {
+        opacity: 1;
+        transform: scaleY(calc(var(--bar-height) * 1.1));
+    }
+}
+
+/* Floating Particles */
+.visual-3-particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--main-color);
+    box-shadow: 0 0 15px var(--main-color);
+}
+
+.visual-3-particle-1 {
+    top: 25%;
+    right: 30%;
+}
+
+.visual-3-particle-2 {
+    top: 60%;
+    left: 20%;
+}
+
+.visual-3-particle-3 {
+    bottom: 25%;
+    right: 25%;
+}
+
+/* Hover Effects */
+.animated-card:hover .visual-3-circle {
+    box-shadow:
+        0 0 40px var(--main-color),
+        0 0 80px rgba(16, 185, 129, 0.4);
+}
+
+.animated-card:hover .visual-3-particle {
+    box-shadow: 0 0 25px var(--main-color);
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+    .visual-3-circle {
+        width: 30px;
+        height: 30px;
+    }
+
+    .visual-3-circle-secondary {
+        width: 24px;
+        height: 24px;
+    }
+
+    .visual-3-circle-small {
+        width: 16px;
+        height: 16px;
+    }
+
+    .visual-3-bars {
+        height: 40px;
+    }
+
+    .visual-3-bar {
+        width: 6px;
+        height: 40px;
+    }
+}

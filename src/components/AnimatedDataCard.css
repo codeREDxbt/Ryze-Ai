@@ -1,0 +1,278 @@
+/* Animated Data Card */
+.animated-data-card {
+    position: relative;
+    width: 356px;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    transition: all 200ms ease-out;
+}
+
+.animated-data-card:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+.animated-data-card__visual {
+    width: 356px;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+}
+
+.animated-data-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px;
+    border-top: 1px solid var(--card-border);
+}
+
+.animated-data-card__title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.animated-data-card__description {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Data Visualization Container */
+.data-visualization {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Grid Background */
+.data-visualization__grid {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    background-image: 
+        linear-gradient(to right, rgba(128, 128, 128, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(128, 128, 128, 0.08) 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position: center;
+    opacity: 0.7;
+    mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 60%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 60%, transparent 100%);
+    pointer-events: none;
+}
+
+/* Radial Gradient */
+.data-visualization__gradient {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Overlay Gradient (Layer 3 - appears on hover) */
+.data-visualization__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: all 500ms cubic-bezier(0.6, 0.6, 0, 1);
+}
+
+.animated-data-card:hover .data-visualization__overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Popup Info (Layer 2 - appears on hover) */
+.data-visualization__popup {
+    position: absolute;
+    inset: 0;
+    z-index: 7;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 356px;
+    padding: 16px;
+    background: transparent;
+    transform: translateY(100%);
+    transition: transform 500ms cubic-bezier(0.6, 0.6, 0, 1);
+}
+
+.animated-data-card:hover .data-visualization__popup {
+    transform: translateY(0);
+}
+
+.data-popup {
+    border-radius: 6px;
+    border: 1px solid var(--card-border);
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 6px;
+    opacity: 0;
+    transition: opacity 500ms cubic-bezier(0.6, 0, 1);
+}
+
+.animated-data-card:hover .data-popup {
+    opacity: 1;
+}
+
+.light-theme .data-popup {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: var(--card-border);
+}
+
+.dark-theme .data-popup {
+    background: rgba(0, 0, 0, 0.25);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.data-popup__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.data-popup__indicator {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: var(--main-color);
+}
+
+.data-popup__title {
+    font-size: 12px;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.data-popup__text {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Stats Badges (Layer 1 - hide on hover) */
+.data-visualization__stats {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 8;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.stat-badge {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    border-radius: 9999px;
+    border: 1px solid var(--card-border);
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 2px 6px;
+    opacity: 1;
+    transition: opacity 300ms ease-in-out;
+}
+
+.animated-data-card:hover .stat-badge {
+    opacity: 0;
+}
+
+.light-theme .stat-badge {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: var(--card-border);
+}
+
+.dark-theme .stat-badge {
+    background: rgba(0, 0, 0, 0.25);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.stat-badge__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.stat-badge__dot--primary {
+    background-color: var(--main-color);
+}
+
+.stat-badge__dot--secondary {
+    background-color: var(--secondary-color);
+}
+
+.stat-badge__text {
+    margin-left: 4px;
+    font-size: 10px;
+    color: var(--text-primary);
+}
+
+/* Animated Bar Chart (Layer 4) */
+.animated-bar-chart {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 356px;
+    height: 180px;
+    color: rgba(0, 0, 0, 0.1);
+    transform: scale(1);
+    transition: transform 500ms cubic-bezier(0.6, 0.6, 0, 1);
+}
+
+.dark-theme .animated-bar-chart {
+    color: rgba(255, 255, 255, 0.15);
+}
+
+.animated-data-card:hover .animated-bar-chart {
+    transform: scale(1.5);
+}
+
+.animated-bar {
+    transition: all 500ms cubic-bezier(0.6, 0.6, 0, 1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .animated-data-card {
+        width: 100%;
+        max-width: 356px;
+    }
+
+    .animated-data-card__visual {
+        width: 100%;
+    }
+
+    .data-visualization__popup {
+        width: 100%;
+    }
+
+    .animated-bar-chart {
+        width: 100%;
+    }
+}

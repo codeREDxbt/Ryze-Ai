@@ -1,0 +1,59 @@
+/* Glare Card - Linear Glare Effect on Hover */
+.glare-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    transition: all 200ms ease-out;
+}
+
+.glare-card:hover {
+    background: var(--card-bg);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.glare-card__content {
+    position: relative;
+    z-index: 2;
+    padding: 24px;
+}
+
+.glare-card__glow {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 300ms ease-out;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(16, 185, 129, 0.1) 50%,
+        transparent 70%
+    );
+    background-size: 200% 200%;
+    background-position: 200% 0;
+    pointer-events: none;
+}
+
+.glare-card:hover .glare-card__glow {
+    opacity: 1;
+    animation: glare-move 600ms ease-out forwards;
+}
+
+@keyframes glare-move {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .glare-card__content {
+        padding: 16px;
+    }
+}
