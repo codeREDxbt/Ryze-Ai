@@ -73,8 +73,6 @@
     position: relative;
     border-radius: var(--radius-lg);
     padding: 2px;
-    transition: all 200ms ease-out
-    padding: 2px;
     transition: all var(--transition-base);
 }
 
@@ -102,7 +100,6 @@
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     outline: none;
-    transition: all 200ms ease-out
     transition: all var(--transition-base);
 }
 
@@ -159,7 +156,7 @@
     background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
     border: none;
     border-radius: var(--radius-lg);
-    cursor: pointer;200ms ease-out
+    cursor: pointer;
     overflow: hidden;
     transition: all var(--transition-base);
     box-shadow: 
@@ -197,7 +194,8 @@
         var(--accent-color),
         transparent
     );
-    opacity: 0;all 200ms ease-out;
+    opacity: 0;
+    transition: all 200ms ease-out;
 }
 
 .bottom-gradient-2 {
@@ -214,7 +212,6 @@
     );
     filter: blur(4px);
     opacity: 0;
-    transition: all 200ms ease-out
     transition: opacity var(--transition-slow);
 }
 
@@ -233,7 +230,8 @@
         transparent,
         var(--border-color),
         transparent
-    );4) 0 var(--space-3) 0;
+    );
+    margin: var(--space-4) 0 var(--space-3) 0;
     transition: all 200ms ease-out;
 }
 
@@ -297,8 +295,7 @@
 
 .social-label {
     color: var(--text-muted);
-    transition: all 200ms ease-out
-    color: var(--text-muted);
+    transition: all 200ms ease-out;
 }
 
 /* Responsive */
@@ -330,4 +327,17 @@
 
 .demo-booking-form {
     animation: fadeIn 0.5s ease-out;
+}
+
+/* Status messages */
+.form-error {
+    margin-top: var(--space-2);
+    color: #ef4444; /* red-500 */
+    font-size: var(--font-size-xs);
+}
+
+.form-success {
+    margin-top: var(--space-2);
+    color: #22c55e; /* green-500 */
+    font-size: var(--font-size-xs);
 }

@@ -207,4 +207,13 @@ This project is private and proprietary.
 
 ---
 
+## 🔒 Security
+
+- Client-side form validation and basic submission throttling are implemented in `src/components/DemoBookingForm.jsx` using Zod.
+- Secrets must never be placed in the frontend. Any `import.meta.env.VITE_*` variables are public at runtime.
+- Implement server-side rate limiting (IP + user), strict schema validation, secure headers, and key management before connecting real APIs.
+- See [SECURITY.md](SECURITY.md) for recommended server controls and OWASP-aligned practices.
+
+---
+
 **Built with ❤️ by the Ryze AI Team**
