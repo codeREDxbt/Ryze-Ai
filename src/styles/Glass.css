@@ -1,0 +1,277 @@
+/* ===================================
+   RYZE AI - Liquid Glass Design System
+   Premium frosted glass effects with
+   specular highlights & depth
+   =================================== */
+
+/* ===================================
+   Glass CSS Custom Properties
+   =================================== */
+:root {
+    /* Glass Blur Strengths */
+    --glass-blur-sm: 8px;
+    --glass-blur-md: 16px;
+    --glass-blur-lg: 24px;
+    --glass-blur-xl: 32px;
+
+    /* Glass Tints (Dark Theme) */
+    --glass-tint: rgba(17, 17, 19, 0.75);
+    --glass-tint-light: rgba(17, 17, 19, 0.6);
+    --glass-tint-heavy: rgba(9, 9, 11, 0.85);
+
+    /* Glass Borders */
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-border-highlight: rgba(255, 255, 255, 0.15);
+    --glass-border-accent: rgba(16, 185, 129, 0.3);
+
+    /* Glass Shadows */
+    --glass-shadow-outer: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --glass-shadow-inner: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    --glass-shadow-glow: 0 0 40px rgba(16, 185, 129, 0.1);
+
+    /* Specular Highlight */
+    --glass-specular: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0.05) 40%,
+            transparent 60%);
+}
+
+/* Light Theme Glass Properties */
+.light-theme {
+    --glass-tint: rgba(255, 255, 255, 0.75);
+    --glass-tint-light: rgba(255, 255, 255, 0.6);
+    --glass-tint-heavy: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.06);
+    --glass-border-highlight: rgba(0, 0, 0, 0.1);
+    --glass-border-accent: rgba(16, 185, 129, 0.25);
+    --glass-shadow-outer: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --glass-shadow-inner: inset 0 1px 1px rgba(255, 255, 255, 0.8);
+    --glass-specular: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.6) 0%,
+            rgba(255, 255, 255, 0.3) 40%,
+            transparent 60%);
+}
+
+/* ===================================
+   Noise Texture (SVG Filter)
+   =================================== */
+.glass-noise::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    border-radius: inherit;
+    z-index: 1;
+}
+
+.light-theme .glass-noise::before {
+    opacity: 0.02;
+}
+
+/* ===================================
+   Base Glass Panel
+   =================================== */
+.glass-panel {
+    position: relative;
+    background: var(--glass-tint);
+    backdrop-filter: blur(var(--glass-blur-md)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--glass-blur-md)) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow:
+        var(--glass-shadow-outer),
+        var(--glass-shadow-inner);
+    overflow: hidden;
+}
+
+/* Specular highlight overlay */
+.glass-panel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glass-specular);
+    pointer-events: none;
+    border-radius: inherit;
+    z-index: 0;
+}
+
+/* Ensure content is above overlays */
+.glass-panel>* {
+    position: relative;
+    z-index: 2;
+}
+
+/* ===================================
+   Glass Card Variant
+   =================================== */
+.glass-card {
+    position: relative;
+    background: var(--glass-tint-light);
+    backdrop-filter: blur(var(--glass-blur-lg)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--glass-blur-lg)) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow:
+        var(--glass-shadow-outer),
+        var(--glass-shadow-inner);
+    transition: all var(--transition-base);
+    overflow: hidden;
+}
+
+.glass-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glass-specular);
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0.5;
+    transition: opacity var(--transition-base);
+}
+
+.glass-card:hover {
+    border-color: var(--glass-border-highlight);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.4),
+        var(--glass-shadow-inner),
+        var(--glass-shadow-glow);
+    transform: translateY(-2px);
+}
+
+.glass-card:hover::after {
+    opacity: 1;
+}
+
+.glass-card>* {
+    position: relative;
+    z-index: 2;
+}
+
+/* ===================================
+   Glass Navigation Variant
+   =================================== */
+.glass-nav {
+    background: var(--glass-tint-heavy);
+    backdrop-filter: blur(var(--glass-blur-xl)) saturate(200%);
+    -webkit-backdrop-filter: blur(var(--glass-blur-xl)) saturate(200%);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.25),
+        var(--glass-shadow-inner);
+}
+
+.glass-nav::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            var(--glass-border-highlight) 50%,
+            transparent 100%);
+    pointer-events: none;
+}
+
+/* ===================================
+   Glass Chip (Small Floating Elements)
+   =================================== */
+.glass-chip {
+    position: relative;
+    background: var(--glass-tint);
+    backdrop-filter: blur(var(--glass-blur-md)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--glass-blur-md)) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.2),
+        var(--glass-shadow-inner);
+    overflow: hidden;
+}
+
+.glass-chip::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glass-specular);
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0.6;
+}
+
+.glass-chip>* {
+    position: relative;
+    z-index: 2;
+}
+
+/* ===================================
+   Glass with Accent Glow
+   =================================== */
+.glass-accent {
+    border-color: var(--glass-border-accent);
+    box-shadow:
+        var(--glass-shadow-outer),
+        var(--glass-shadow-inner),
+        0 0 30px rgba(16, 185, 129, 0.15);
+}
+
+.glass-accent:hover {
+    box-shadow:
+        var(--glass-shadow-outer),
+        var(--glass-shadow-inner),
+        0 0 50px rgba(16, 185, 129, 0.25);
+}
+
+/* ===================================
+   Fallback for browsers without
+   backdrop-filter support
+   =================================== */
+@supports not (backdrop-filter: blur(1px)) {
+
+    .glass-panel,
+    .glass-card,
+    .glass-nav,
+    .glass-chip {
+        background: rgba(17, 17, 19, 0.95);
+    }
+
+    .light-theme .glass-panel,
+    .light-theme .glass-card,
+    .light-theme .glass-nav,
+    .light-theme .glass-chip {
+        background: rgba(255, 255, 255, 0.95);
+    }
+}
+
+/* ===================================
+   Reduced Motion Support
+   =================================== */
+@media (prefers-reduced-motion: reduce) {
+
+    .glass-card,
+    .glass-panel {
+        transition: none;
+    }
+
+    .glass-card:hover {
+        transform: none;
+    }
+}
+
+/* ===================================
+   Mobile Optimizations
+   =================================== */
+@media (max-width: 767px) {
+    :root {
+        --glass-blur-md: 12px;
+        --glass-blur-lg: 16px;
+        --glass-blur-xl: 20px;
+    }
+
+    .glass-card:hover {
+        transform: none;
+    }
+}

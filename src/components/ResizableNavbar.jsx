@@ -11,24 +11,46 @@ import './ResizableNavbar.css';
  */
 export function Navbar({ children, className = '' }) {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     useEffect(() => {
+        let rafId = null;
+        let lastScrollY = window.scrollY;
+
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
+            // Batch reads and schedule state update via rAF
+            if (rafId) return;
+
+            rafId = requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
+                const shouldBeScrolled = scrollY > 50;
+
+                if (shouldBeScrolled !== isScrolled) {
+                    setIsAnimating(true);
+                    setIsScrolled(shouldBeScrolled);
+                    // Remove will-change after animation completes
+                    setTimeout(() => setIsAnimating(false), 600);
+                }
+
+                lastScrollY = scrollY;
+                rafId = null;
+            });
         };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+
+        // Use passive listener for better scroll performance
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            if (rafId) cancelAnimationFrame(rafId);
+        };
+    }, [isScrolled]);
 
     return (
         <header
             className={`resizable-navbar ${isScrolled ? 'scrolled' : ''} ${className}`}
         >
             <div
-                className={`navbar-container ${isScrolled ? 'navbar-scrolled' : ''}`}
-                style={{
-                    padding: isScrolled ? '0.5rem 1.5rem' : '1rem 1.5rem',
-                }}
+                className={`navbar-container ${isScrolled ? 'navbar-scrolled' : ''} ${isAnimating ? 'navbar-animating' : ''}`}
             >
                 {children}
             </div>

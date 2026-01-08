@@ -4,7 +4,7 @@ import Stats from '../components/Stats';
 import CTASection from '../components/CTASection';
 import BorderBeam from '../components/BorderBeam';
 import AnimatedTestimonials from '../components/AnimatedTestimonials';
-import HeroParallax, { generateSampleProducts } from '../components/HeroParallax';
+import HeroAIPowered from '../components/HeroAIPowered';
 import Visual3 from '../components/Visual3';
 import { AnimatedDataCard } from '../components/AnimatedDataCard';
 import {
@@ -201,8 +201,8 @@ export default function HomePage() {
 
     return (
         <div className="home-page">
-            {/* Hero Section with Parallax */}
-            <HeroParallax products={generateSampleProducts()} />
+            {/* Hero Section - AI Powered Agency Style */}
+            <HeroAIPowered />
 
             {/* Problem Statement */}
             <section id="problem" className="section problem-section">
