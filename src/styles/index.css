@@ -593,3 +593,20 @@ p {
     line-height: 1.65;
   }
 }
+
+/* ===================================
+   Watermark (Internship Test Notice)
+   =================================== */
+.watermark {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.8;
+}
