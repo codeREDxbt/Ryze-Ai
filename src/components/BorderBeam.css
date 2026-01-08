@@ -10,6 +10,9 @@
     border-radius: inherit;
     overflow: hidden;
     z-index: 0;
+    /* Mobile performance optimizations */
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 /* The rotating gradient beam */
@@ -25,6 +28,10 @@
             transparent 120deg);
     animation: borderBeamRotate var(--duration, 10s) linear infinite;
     animation-delay: var(--delay, 0s);
+    /* Mobile performance optimizations */
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 /* Inner mask to create border effect */
@@ -97,4 +104,32 @@
             var(--color-from, var(--accent-color)) 60deg,
             var(--color-to, var(--accent-hover)) 90deg,
             transparent 120deg);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 767px) {
+    .border-beam::before {
+        /* Slower animation for better mobile performance */
+        animation-duration: 15s;
+    }
+
+    .border-beam-glow {
+        /* Reduce glow intensity on mobile */
+        opacity: 0.2;
+        filter: blur(6px);
+    }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 767px) {
+    .border-beam::before {
+        /* Slower animation for better mobile performance */
+        animation-duration: 15s;
+    }
+
+    .border-beam-glow {
+        /* Reduce glow intensity on mobile */
+        opacity: 0.2;
+        filter: blur(6px);
+    }
 }

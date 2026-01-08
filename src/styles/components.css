@@ -28,6 +28,10 @@
     white-space: nowrap;
     text-decoration: none;
     min-height: 44px;
+    /* Mobile performance optimizations */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .btn:focus-visible {
@@ -357,4 +361,77 @@
 ::selection {
     background: var(--accent-color);
     color: #ffffff;
+}
+
+/* ===================================
+   Mobile Optimizations
+   =================================== */
+@media (max-width: 1023px) {
+    /* Disable hover effects on touch devices for better performance */
+    .card:hover {
+        transform: none;
+        box-shadow: var(--shadow-md);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+        transform: none;
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-secondary:hover:not(:disabled),
+    .btn-ghost:hover:not(:disabled),
+    .btn-outline:hover:not(:disabled) {
+        transform: none;
+    }
+}
+
+@media (max-width: 767px) {
+    /* Optimize button sizing for mobile */
+    .btn {
+        padding: var(--space-3) var(--space-5);
+        font-size: 0.9375rem;
+    }
+
+    .btn-sm {
+        padding: var(--space-2) var(--space-4);
+        font-size: var(--font-size-sm);
+        min-height: 40px;
+    }
+
+    .btn-lg {
+        padding: var(--space-3-5) var(--space-6);
+        font-size: var(--font-size-base);
+        min-height: 48px;
+    }
+
+    /* Optimize cards for mobile */
+    .card {
+        padding: var(--space-5);
+    }
+
+    .card-title {
+        font-size: var(--font-size-base);
+    }
+
+    .card-description {
+        font-size: 0.8125rem;
+    }
+
+    /* Improve form inputs on mobile */
+    .input {
+        font-size: 1rem; /* Prevent zoom on iOS */
+        padding: var(--space-3) var(--space-4);
+    }
+
+    /* Optimize badges for mobile */
+    .badge {
+        font-size: 0.6875rem;
+        padding: var(--space-1) var(--space-2-5);
+    }
+
+    /* Reduce scrollbar width on mobile */
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
 }

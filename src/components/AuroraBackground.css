@@ -15,6 +15,9 @@
     background: var(--background);
     transition: background 200ms ease-out;
     z-index: -1;
+    /* Mobile performance optimizations */
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .aurora-container {
@@ -33,6 +36,9 @@
     filter: blur(120px);
     will-change: transform;
     transition: opacity 200ms ease-out, filter 200ms ease-out;
+    /* Mobile performance optimizations */
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .aurora-mask {
