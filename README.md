@@ -1,12 +1,21 @@
-# ⚡ Ryze AI - AI-Powered Ad Management Platform
+# Ryze AI Website Redesign – Internship Assignment
 
-> **Smart advertising management that actually makes money**
+> A modern, clean redesign of get-ryze.ai focusing on improved UX, visual appeal, and clarity.
 
-Ryze AI is a modern, high-performance web application for AI-powered advertising campaign management. Built with React, Vite, and Framer Motion, it features a stunning UI with parallax effects, animated components, and a complete dark/light theme system.
+Disclaimer: This is a conceptual redesign created for internship evaluation purposes only. Not intended for commercial use or implementation without explicit permission.
 
-![Ryze AI](https://img.shields.io/badge/React-19.2.0-61dafb?style=flat-square&logo=react)
-![Vite](https://img.shields.io/badge/Vite-7.2.4-646cff?style=flat-square&logo=vite)
-![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.24-ff0055?style=flat-square)
+## Design & Structural Decisions
+
+- Overall Approach: Transformed the data‑heavy original (dense tables for metrics/creatives/audits) into a cleaner, modular single‑page flow with clear sections and strong scannability.
+- Visual Appeal & Branding: Modern typography and a professional, trust‑oriented palette. Replaced raw tables with narrative sections, concise lists, and lightweight visualizations/stats.
+- User Experience: Mobile‑first responsive layout, clear hierarchy with bold headings and bullets, and prominent CTAs (e.g., “Get your free ad account review today”).
+- Clarity of Communication: Hero states the value proposition succinctly; “The Problem” educates on pain points; “How It Works” simplifies onboarding; “Why Ryze AI” contrasts against typical agencies; features/tools organized for reuse.
+- Modular Structure: Platforms, features, and tools are structured as reusable blocks so adding/editing content stays simple.
+
+## Build Notes
+
+- Built in ~8.5 hours using React + Vite + CSS.
+- Live demo deployed on Vercel.
 
 ---
 
