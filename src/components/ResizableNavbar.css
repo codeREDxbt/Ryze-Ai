@@ -1,10 +1,10 @@
 /* ===================================
    Resizable Navbar Component
-   Optimized for smooth resizing + liquid glass
+   Apple-like Floating Liquid Glass Pill
    =================================== */
 
 /* ===================================
-   Performance-Optimized Navbar Base
+   Navbar Wrapper (Centers the Pill)
    =================================== */
 .resizable-navbar {
     position: fixed;
@@ -15,83 +15,139 @@
     display: flex;
     justify-content: center;
     pointer-events: none;
-    padding: 0;
-    /* Smooth spring-like easing */
-    transition: padding 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Floating offset from top */
+    padding: 12px var(--pill-margin-x, 24px) 0;
+    transition: padding var(--pill-transition-duration, 0.45s) var(--pill-transition-easing, cubic-bezier(0.22, 1, 0.36, 1));
 }
 
 .resizable-navbar.scrolled {
-    padding: 12px 20px 0 20px;
+    padding: 10px var(--pill-margin-x, 24px) 0;
 }
 
 /* ===================================
-   Navbar Container - Liquid Glass
+   Navbar Container - Liquid Glass Pill
    =================================== */
 .navbar-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
+    max-width: 1200px;
     pointer-events: auto;
 
     /* Liquid Glass Effect */
-    background: rgba(9, 9, 11, 0.75);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-top: none;
-    border-radius: 0;
+    background: rgba(9, 9, 11, 0.72);
+    backdrop-filter: blur(var(--pill-blur, 28px)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--pill-blur, 28px)) saturate(180%);
 
-    /* Specular highlight */
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    /* Pill Shape - Default (subtle rounding) */
+    border-radius: var(--pill-radius-default, 20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    /* Layered shadow for depth */
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.25),
+        0 1px 3px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
 
     /* Default padding */
-    padding: 1rem 1.5rem;
+    padding: 0.875rem 1.5rem;
 
-    /* Smooth multi-property transitions (GPU-friendly) */
+    /* Buttery smooth transitions */
     transition:
-        max-width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-        border-radius 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.05s,
-        box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        max-width var(--pill-transition-duration) var(--pill-transition-easing),
+        border-radius var(--pill-transition-duration) var(--pill-transition-easing),
+        padding var(--pill-transition-duration) var(--pill-transition-easing),
+        box-shadow 0.3s ease,
         background 0.3s ease,
-        border-color 0.3s ease,
-        padding 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        border-color 0.3s ease;
+}
+
+/* Specular highlight overlay */
+.navbar-container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.03) 30%,
+            transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Noise texture overlay (very subtle) */
+.navbar-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Ensure content is above overlays */
+.navbar-container>* {
+    position: relative;
+    z-index: 2;
 }
 
 /* Apply will-change only during active animation */
 .navbar-container.navbar-animating {
-    will-change: max-width, border-radius, padding, box-shadow;
+    will-change: max-width, border-radius, padding;
 }
 
-/* Scrolled state - compact pill */
+/* ===================================
+   Scrolled State - Compact Pill
+   =================================== */
 .navbar-scrolled {
-    padding: 0.5rem 1.5rem;
-    max-width: 800px;
-    border-radius: 9999px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(9, 9, 11, 0.88);
+    max-width: var(--pill-max-width, 720px);
+    border-radius: var(--pill-radius-compact, 9999px);
+    padding: 0.5rem 1.25rem;
+    background: rgba(9, 9, 11, 0.85);
+    border-color: rgba(255, 255, 255, 0.12);
     box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.4),
-        0 0 50px rgba(16, 185, 129, 0.12),
+        0 8px 32px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        0 0 60px rgba(16, 185, 129, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-/* Light theme */
+/* ===================================
+   Light Theme Glass
+   =================================== */
 .light-theme .navbar-container {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(28px) saturate(200%);
-    -webkit-backdrop-filter: blur(28px) saturate(200%);
-    border: 1px solid rgba(16, 185, 129, 0.12);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(var(--pill-blur, 28px)) saturate(200%);
+    -webkit-backdrop-filter: blur(var(--pill-blur, 28px)) saturate(200%);
+    border-color: rgba(16, 185, 129, 0.15);
     box-shadow:
-        0 4px 24px rgba(0, 0, 0, 0.06),
+        0 4px 24px rgba(0, 0, 0, 0.08),
+        0 1px 3px rgba(0, 0, 0, 0.04),
         inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.light-theme .navbar-container::after {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.5) 0%,
+            rgba(255, 255, 255, 0.2) 30%,
+            transparent 60%);
+}
+
+.light-theme .navbar-container::before {
+    opacity: 0.015;
 }
 
 .light-theme .navbar-scrolled {
     background: rgba(255, 255, 255, 0.88);
+    border-color: rgba(16, 185, 129, 0.2);
     box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.1),
-        0 0 0 1px rgba(16, 185, 129, 0.15),
-        0 0 40px rgba(16, 185, 129, 0.08),
+        0 0 0 1px rgba(16, 185, 129, 0.1),
+        0 0 50px rgba(16, 185, 129, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
 
@@ -116,14 +172,15 @@
     /* Use transform for scale animation (GPU-accelerated) */
     transform: scale(1);
     transform-origin: left center;
+    /* Apple-like easing for buttery smooth feel */
     transition:
-        transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        transform var(--pill-transition-duration, 0.45s) var(--pill-transition-easing, cubic-bezier(0.22, 1, 0.36, 1)),
         opacity 0.2s ease;
 }
 
 /* Scale down logo when scrolled (via parent class) */
 .navbar-scrolled .navbar-logo {
-    transform: scale(0.9);
+    transform: scale(0.88);
 }
 
 .navbar-logo:hover {

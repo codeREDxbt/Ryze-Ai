@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import BookDemoButton from './BookDemoButton';
 import BorderBeam from './BorderBeam';
 import './PricingCard.css';
 
@@ -28,7 +29,7 @@ export default function PricingCard({
         <article className={`pricing-card ${isPopular ? 'pricing-card-popular' : ''} ${isEnterprise ? 'pricing-card-enterprise' : ''} ${isExpanded ? 'pricing-card-expanded' : ''}`}>
             {isPopular && <BorderBeam colorFrom="var(--accent-color)" colorTo="var(--accent-hover)" delay={0} />}
             {isEnterprise && <BorderBeam colorFrom="#8b5cf6" colorTo="#a78bfa" delay={0.5} />}
-            
+
             {isPopular && (
                 <div className="pricing-badge">
                     Most Popular
@@ -71,13 +72,24 @@ export default function PricingCard({
                 </button>
             )}
 
-            <Link
-                to={cta.link || '#'}
-                className={`btn ${isPopular ? 'btn-primary' : 'btn-ghost'} btn-lg pricing-cta`}
-                onClick={handleCTAClick}
-            >
-                {cta.text}
-            </Link>
+            {cta.link === '/demo' ? (
+                <BookDemoButton
+                    variant={isPopular ? 'primary' : 'ghost'}
+                    size="lg"
+                    className="pricing-cta"
+                    trackingLocation={`pricing_${name.toLowerCase()}`}
+                    showIcon={false}
+                >
+                    {cta.text}
+                </BookDemoButton>
+            ) : (
+                <Link
+                    to={cta.link || '#'}
+                    className={`btn ${isPopular ? 'btn-primary' : 'btn-ghost'} btn-lg pricing-cta`}
+                >
+                    {cta.text}
+                </Link>
+            )}
         </article>
     );
 }

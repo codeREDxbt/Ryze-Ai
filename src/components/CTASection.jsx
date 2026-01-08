@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import BookDemoButton from './BookDemoButton';
 import './CTASection.css';
 
 export default function CTASection({
@@ -20,10 +21,19 @@ export default function CTASection({
                     </div>
 
                     <div className="cta-actions">
-                        <Link to={primaryCTA.link} className="btn btn-primary btn-lg">
-                            {primaryCTA.text}
-                            <ArrowRight size={18} aria-hidden="true" />
-                        </Link>
+                        {primaryCTA.link === '/demo' ? (
+                            <BookDemoButton
+                                className="btn-lg"
+                                trackingLocation="cta_section"
+                            >
+                                {primaryCTA.text}
+                            </BookDemoButton>
+                        ) : (
+                            <Link to={primaryCTA.link} className="btn btn-primary btn-lg">
+                                {primaryCTA.text}
+                                <ArrowRight size={18} aria-hidden="true" />
+                            </Link>
+                        )}
                         {secondaryCTA && (
                             <Link to={secondaryCTA.link} className="btn btn-ghost btn-lg">
                                 {secondaryCTA.text}

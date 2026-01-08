@@ -214,3 +214,41 @@
         animation-duration: 30s;
     }
 }
+
+/* ===================================
+   Performance Tier Overrides
+   =================================== */
+
+/* Tier A: Static aurora (no continuous animation, reduced blur) */
+[data-perf-tier="A"] .aurora-layer {
+    filter: blur(60px);
+    opacity: 0.25;
+}
+
+[data-perf-tier="A"] .aurora-glow-1,
+[data-perf-tier="A"] .aurora-glow-2,
+[data-perf-tier="A"] .aurora-glow-3 {
+    animation: none;
+    /* Static position for visual interest without motion */
+    transform: none;
+}
+
+[data-perf-tier="A"] .aurora-grain {
+    display: none;
+}
+
+/* Tier B: Slower, simpler aurora animation */
+[data-perf-tier="B"] .aurora-layer {
+    filter: blur(70px);
+    opacity: 0.3;
+}
+
+[data-perf-tier="B"] .aurora-glow-1,
+[data-perf-tier="B"] .aurora-glow-2,
+[data-perf-tier="B"] .aurora-glow-3 {
+    animation-duration: 40s;
+}
+
+[data-perf-tier="B"] .aurora-grain {
+    opacity: 0.015;
+}

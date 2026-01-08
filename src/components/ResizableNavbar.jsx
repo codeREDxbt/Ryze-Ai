@@ -48,9 +48,11 @@ export function Navbar({ children, className = '' }) {
     return (
         <header
             className={`resizable-navbar ${isScrolled ? 'scrolled' : ''} ${className}`}
+            role="banner"
         >
             <div
                 className={`navbar-container ${isScrolled ? 'navbar-scrolled' : ''} ${isAnimating ? 'navbar-animating' : ''}`}
+                data-state={isScrolled ? 'compact' : 'default'}
             >
                 {children}
             </div>
@@ -237,14 +239,16 @@ export function ThemeToggle({ isDark, onToggle }) {
 /**
  * Complete ResizableNavbar with all features
  */
+import BookDemoButton from './BookDemoButton';
+
 export default function ResizableNavbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isDarkTheme, setIsDarkTheme] = useState(true);
-    const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
     const location = useLocation();
 
     // Initialize theme from localStorage
     useEffect(() => {
+        // ... (theme code unchanged) ...
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') {
             setIsDarkTheme(false);
@@ -257,6 +261,7 @@ export default function ResizableNavbar() {
 
     // Apply theme changes
     useEffect(() => {
+        // ... (theme code unchanged) ...
         if (isDarkTheme) {
             document.documentElement.classList.remove('light-theme');
             localStorage.setItem('theme', 'dark');
@@ -289,22 +294,63 @@ export default function ResizableNavbar() {
         }
     }, [location]);
 
-    // Prevent body scroll when modal is open
+    // Measure navbar height and update CSS variable
     useEffect(() => {
-        if (isDemoModalOpen) {
+        const updateNavHeight = () => {
+            const navbar = document.querySelector('.resizable-navbar');
+            if (navbar) {
+                const height = navbar.offsetHeight;
+                document.documentElement.style.setProperty('--nav-h', `${height}px`);
+                // Also reset scroll padding to match
+                document.documentElement.style.scrollPaddingTop = `calc(${height}px + 12px)`;
+            }
+        };
+
+        // Initial update
+        updateNavHeight();
+
+        // Use ResizeObserver for robust updates
+        const resizeObserver = new ResizeObserver(() => {
+            // Debounce slightly if needed, but usually cheap enough
+            requestAnimationFrame(updateNavHeight);
+        });
+
+        const navbar = document.querySelector('.resizable-navbar');
+        if (navbar) {
+            resizeObserver.observe(navbar);
+        }
+
+        return () => resizeObserver.disconnect();
+    }, []);
+
+    // Prevent body scroll when mobile menu is open
+    useEffect(() => {
+        if (isMobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
             document.body.classList.add('modal-open');
         } else {
+            document.body.style.overflow = '';
             document.body.classList.remove('modal-open');
         }
         return () => {
+            document.body.style.overflow = '';
             document.body.classList.remove('modal-open');
         };
-    }, [isDemoModalOpen]);
+    }, [isMobileMenuOpen]);
 
-    const handleOpenDemoModal = () => {
-        setIsDemoModalOpen(true);
-        setIsMobileMenuOpen(false);
-    };
+    // Escape key closes mobile menu (accessibility)
+    useEffect(() => {
+        const handleEscape = (e) => {
+            if (e.key === 'Escape' && isMobileMenuOpen) {
+                setIsMobileMenuOpen(false);
+            }
+        };
+
+        if (isMobileMenuOpen) {
+            document.addEventListener('keydown', handleEscape);
+        }
+        return () => document.removeEventListener('keydown', handleEscape);
+    }, [isMobileMenuOpen]);
 
     const navItems = [
         { name: 'Features', link: '/features' },
@@ -313,65 +359,67 @@ export default function ResizableNavbar() {
     ];
 
     return (
-        <>
-            <Navbar>
-                <NavBody>
-                    <NavbarLogo>
-                        <svg viewBox="0 0 120 32" className="logo-svg" aria-hidden="true">
-                            <defs>
-                                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stopColor="#10b981" />
-                                    <stop offset="100%" stopColor="#34d399" />
-                                </linearGradient>
-                            </defs>
-                            <path
-                                d="M4 4h12l-4 12h8l-12 12 4-12H4l8-12z"
-                                fill="url(#logoGradient)"
-                            />
-                            <text x="28" y="22" fill="currentColor" fontSize="18" fontWeight="800">
-                                RYZE
-                            </text>
-                            <text x="78" y="22" fill="var(--accent-color)" fontSize="18" fontWeight="800">
-                                AI
-                            </text>
-                        </svg>
-                    </NavbarLogo>
-
-                    <NavItems items={navItems} />
-
-                    <div className="navbar-actions">
-                        <ThemeToggle
-                            isDark={isDarkTheme}
-                            onToggle={() => setIsDarkTheme(!isDarkTheme)}
+        <Navbar>
+            <NavBody>
+                <NavbarLogo>
+                    <svg viewBox="0 0 120 32" className="logo-svg" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#10b981" />
+                                <stop offset="100%" stopColor="#34d399" />
+                            </linearGradient>
+                        </defs>
+                        <path
+                            d="M4 4h12l-4 12h8l-12 12 4-12H4l8-12z"
+                            fill="url(#logoGradient)"
                         />
-                        <NavbarButton variant="primary" onClick={handleOpenDemoModal}>
-                            Book a Demo
-                        </NavbarButton>
-                        <MobileNavToggle
-                            isOpen={isMobileMenuOpen}
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        <text x="28" y="22" fill="currentColor" fontSize="18" fontWeight="800">
+                            RYZE
+                        </text>
+                        <text x="78" y="22" fill="var(--accent-color)" fontSize="18" fontWeight="800">
+                            AI
+                        </text>
+                    </svg>
+                </NavbarLogo>
+
+                <NavItems items={navItems} />
+
+                <div className="navbar-actions">
+                    <ThemeToggle
+                        isDark={isDarkTheme}
+                        onToggle={() => setIsDarkTheme(!isDarkTheme)}
+                    />
+                    <BookDemoButton
+                        variant="primary"
+                        className="navbar-button"
+                        showIcon={false}
+                        trackingLocation="navbar"
+                    />
+                    <MobileNavToggle
+                        isOpen={isMobileMenuOpen}
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    />
+                </div>
+            </NavBody>
+
+            <MobileNav visible={isMobileMenuOpen}>
+                <MobileNavMenu visible={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)}>
+                    <NavItems
+                        items={navItems}
+                        className="mobile-nav-items"
+                        onItemClick={() => setIsMobileMenuOpen(false)}
+                    />
+                    <div style={{ marginTop: '0.5rem', padding: '0 1rem' }}>
+                        <BookDemoButton
+                            variant="primary"
+                            className="mobile-demo-btn"
+                            style={{ width: '100%', justifyContent: 'center' }}
+                            trackingLocation="mobile-menu"
+                            onClick={() => setIsMobileMenuOpen(false)}
                         />
                     </div>
-                </NavBody>
-
-                <MobileNav visible={isMobileMenuOpen}>
-                    <MobileNavMenu visible={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)}>
-                        <NavItems
-                            items={navItems}
-                            className="mobile-nav-items"
-                            onItemClick={() => setIsMobileMenuOpen(false)}
-                        />
-                        <NavbarButton variant="primary" className="mobile-demo-btn" onClick={handleOpenDemoModal}>
-                            Book a Demo
-                        </NavbarButton>
-                    </MobileNavMenu>
-                </MobileNav>
-            </Navbar>
-
-            <DemoModal
-                isOpen={isDemoModalOpen}
-                onClose={() => setIsDemoModalOpen(false)}
-            />
-        </>
+                </MobileNavMenu>
+            </MobileNav>
+        </Navbar>
     );
 }

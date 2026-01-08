@@ -34,6 +34,15 @@
             rgba(255, 255, 255, 0.1) 0%,
             rgba(255, 255, 255, 0.05) 40%,
             transparent 60%);
+
+    /* Apple-like Pill Navbar Tokens */
+    --pill-radius-default: 20px;
+    --pill-radius-compact: 9999px;
+    --pill-max-width: 720px;
+    --pill-margin-x: 24px;
+    --pill-transition-duration: 0.45s;
+    --pill-transition-easing: cubic-bezier(0.22, 1, 0.36, 1);
+    --pill-blur: 28px;
 }
 
 /* Light Theme Glass Properties */
@@ -275,3 +284,76 @@
         transform: none;
     }
 }
+
+/* ===================================
+   Performance Tier Overrides
+   Adaptive effects based on device capability
+   =================================== */
+
+/* Tier A: Baseline (low-end, reduced motion)
+   No blur, solid surfaces, simple shadows */
+[data-perf-tier="A"] {
+    --glass-blur-sm: 0;
+    --glass-blur-md: 0;
+    --glass-blur-lg: 0;
+    --glass-blur-xl: 0;
+    --pill-blur: 0;
+
+    /* Solid tint for readability without blur */
+    --glass-tint: rgba(17, 17, 19, 0.95);
+    --glass-tint-light: rgba(17, 17, 19, 0.92);
+    --glass-tint-heavy: rgba(9, 9, 11, 0.98);
+
+    /* Simple shadows (no multi-layer) */
+    --glass-shadow-outer: 0 4px 12px rgba(0, 0, 0, 0.25);
+    --glass-shadow-glow: none;
+
+    /* Disable specular highlights */
+    --glass-specular: none;
+}
+
+[data-perf-tier="A"].light-theme,
+.light-theme[data-perf-tier="A"] {
+    --glass-tint: rgba(255, 255, 255, 0.96);
+    --glass-tint-light: rgba(255, 255, 255, 0.94);
+    --glass-tint-heavy: rgba(255, 255, 255, 0.98);
+}
+
+/* Remove noise/specular overlays for Tier A */
+[data-perf-tier="A"] .glass-panel::after,
+[data-perf-tier="A"] .glass-card::after,
+[data-perf-tier="A"] .glass-chip::after,
+[data-perf-tier="A"] .navbar-container::after,
+[data-perf-tier="A"] .navbar-container::before {
+    display: none;
+}
+
+/* Tier B: Enhanced (mid-range)
+   Low blur, lighter overlays */
+[data-perf-tier="B"] {
+    --glass-blur-sm: 6px;
+    --glass-blur-md: 10px;
+    --glass-blur-lg: 14px;
+    --glass-blur-xl: 18px;
+    --pill-blur: 14px;
+
+    /* Slightly heavier tint to compensate for reduced blur */
+    --glass-tint: rgba(17, 17, 19, 0.8);
+    --glass-tint-light: rgba(17, 17, 19, 0.7);
+    --glass-tint-heavy: rgba(9, 9, 11, 0.88);
+}
+
+[data-perf-tier="B"].light-theme,
+.light-theme[data-perf-tier="B"] {
+    --glass-tint: rgba(255, 255, 255, 0.8);
+    --glass-tint-light: rgba(255, 255, 255, 0.7);
+    --glass-tint-heavy: rgba(255, 255, 255, 0.92);
+}
+
+/* Remove noise overlay for Tier B (keep specular) */
+[data-perf-tier="B"] .navbar-container::before {
+    display: none;
+}
+
+/* Tier C: Full (high-end)
+   Uses default values - no overrides needed */

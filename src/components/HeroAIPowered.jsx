@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, TrendingUp, Zap, TrendingDown, Brain, Target } from 'lucide-react';
+import { ArrowRight, Sparkles, TrendingUp, Zap, TrendingDown, Brain } from 'lucide-react';
+import BookDemoButton from './BookDemoButton';
 import './HeroAIPowered.css';
 
 /**
@@ -23,14 +23,7 @@ const trustBadges = [
     { icon: '🏆', text: '#1 Product Hunt' },
 ];
 
-export default function HeroAIPowered({ onOpenDemo }) {
-    const handleCTAClick = (e) => {
-        if (onOpenDemo) {
-            e.preventDefault();
-            onOpenDemo();
-        }
-    };
-
+export default function HeroAIPowered() {
     return (
         <section className="hero-ai-powered" aria-labelledby="hero-heading">
             {/* Background Effects */}
@@ -64,16 +57,13 @@ export default function HeroAIPowered({ onOpenDemo }) {
 
                     {/* CTAs */}
                     <div className="hero-ai-ctas">
-                        <button
-                            onClick={handleCTAClick}
-                            className="btn btn-primary btn-lg"
-                            aria-label="Book a demo to see Ryze AI in action"
+                        <BookDemoButton
+                            className="btn-lg"
+                            trackingLocation="hero_primary"
                         >
                             Book a Demo
-                            <ArrowRight size={18} aria-hidden="true" />
-                        </button>
+                        </BookDemoButton>
                         <button
-                            onClick={handleCTAClick}
                             className="btn btn-ghost btn-lg"
                             aria-label="Get a free review of your ad account"
                         >

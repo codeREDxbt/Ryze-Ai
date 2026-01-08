@@ -8,7 +8,8 @@
 /* Font Loading Optimization */
 @font-face {
   font-family: 'Inter';
-  font-display: swap; /* Ensure text remains visible during font load */
+  font-display: swap;
+  /* Ensure text remains visible during font load */
   src: local('Inter');
 }
 
@@ -16,6 +17,9 @@
    CSS Custom Properties (Design Tokens)
    =================================== */
 :root {
+  /* Dynamic Navbar Height (updated via JS) */
+  --nav-h: 80px;
+
   /* Dark Theme (Default) */
   --background: #09090b;
   --background-secondary: #0f0f12;
@@ -85,6 +89,12 @@
   --transition-slow: 300ms ease;
   --transition-slower: 500ms ease;
 
+  /* Motion Duration (tier-aware) */
+  --motion-duration: 0.3s;
+  --motion-duration-fast: 0.15s;
+  --motion-duration-slow: 0.5s;
+  --motion-easing: cubic-bezier(0.22, 1, 0.36, 1);
+
   /* Z-Index Scale */
   --z-dropdown: 100;
   --z-sticky: 200;
@@ -130,7 +140,8 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
-  scroll-padding-top: 100px; /* Account for fixed navbar */
+  scroll-padding-top: calc(var(--nav-h) + 20px);
+  /* Account for fixed navbar */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* Mobile performance optimizations */
@@ -247,6 +258,12 @@ p {
 .section-header {
   text-align: center;
   margin-bottom: var(--space-8);
+}
+
+/* Ensure anchor links land with visible headers */
+section[id],
+.section[id] {
+  scroll-margin-top: calc(var(--nav-h) + 24px);
 }
 
 .section-header h2 {
@@ -547,6 +564,33 @@ p {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ===================================
+   Performance Tier Motion Overrides
+   =================================== */
+
+/* Tier A: Disable all non-essential motion */
+[data-perf-tier="A"] {
+  --motion-duration: 0s;
+  --motion-duration-fast: 0s;
+  --motion-duration-slow: 0s;
+  --transition-slow: 0s;
+  --transition-slower: 0s;
+  --pill-transition-duration: 0.1s;
+  /* Keep minimal for state feedback */
+}
+
+[data-perf-tier="A"] *:not(.essential-transition) {
+  animation: none !important;
+}
+
+/* Tier B: Reduced motion durations */
+[data-perf-tier="B"] {
+  --motion-duration: 0.2s;
+  --motion-duration-fast: 0.1s;
+  --motion-duration-slow: 0.3s;
+  --pill-transition-duration: 0.3s;
 }
 
 /* ===================================

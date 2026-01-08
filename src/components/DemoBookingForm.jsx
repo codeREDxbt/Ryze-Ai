@@ -25,6 +25,7 @@ export default function DemoBookingForm() {
                 .max(50, 'Last name too long')
                 .regex(/^[A-Za-z'\-\s]+$/, 'Only letters, spaces, hyphens, apostrophes'),
             email: z.string().trim().email('Invalid email').max(254, 'Email too long'),
+            company: z.string().trim().min(2, 'Company name is required').max(100, 'Company name too long'),
             date: z.string().min(1, 'Date is required'),
             time: z
                 .string()
@@ -38,6 +39,7 @@ export default function DemoBookingForm() {
         firstName: '',
         lastName: '',
         email: '',
+        company: '',
         date: '',
         time: ''
     });
@@ -82,6 +84,7 @@ export default function DemoBookingForm() {
             firstName: sanitizeName(formData.firstName),
             lastName: sanitizeName(formData.lastName),
             email: sanitizeEmail(formData.email),
+            company: formData.company.trim(),
             date: formData.date,
             time: formData.time,
         };
@@ -96,6 +99,8 @@ export default function DemoBookingForm() {
         // TODO: Send to backend API (do not expose secrets client-side)
         // fetch('/api/book-demo', { method: 'POST', body: JSON.stringify(result.data) })
         //   .then(...).catch(...)
+
+        console.log('Demo Form Submitted:', result.data);
 
         setSuccess('Demo booked request prepared. We will reach out shortly.');
     };
@@ -159,6 +164,21 @@ export default function DemoBookingForm() {
                         autoComplete="email"
                         maxLength={254}
                         value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
+                </FormField>
+
+                <FormField>
+                    <Label htmlFor="company">Company Name</Label>
+                    <AnimatedInput
+                        id="company"
+                        name="company"
+                        placeholder="Ryze AI"
+                        type="text"
+                        autoComplete="organization"
+                        maxLength={100}
+                        value={formData.company}
                         onChange={handleChange}
                         required
                     />
