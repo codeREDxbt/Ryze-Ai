@@ -234,4 +234,4 @@ This project is private and proprietary.
 
 ---
 
-**Built with ❤️ by the Ryze AI Team**
+**Built with ❤️ by the codeRED**
