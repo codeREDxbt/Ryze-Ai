@@ -7,7 +7,6 @@ import AnimatedTestimonials from '../components/AnimatedTestimonials';
 import HeroParallax, { generateSampleProducts } from '../components/HeroParallax';
 import Visual3 from '../components/Visual3';
 import { AnimatedDataCard } from '../components/AnimatedDataCard';
-import GlareCard from '../components/GlareCard';
 import {
     Zap,
     Brain,
@@ -228,32 +227,14 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* Platform Integrations - Premium GlareCards */}
-            <section className="section platform-integrations-section">
-                <div className="container">
-                    <div className="section-header">
-                        <h2>Works With Your Existing Platforms</h2>
-                        <p>Connect your ad accounts in seconds. Ryze AI supports all major advertising platforms.</p>
-                    </div>
-                    <div className="platform-cards-grid">
-                        {platforms.map((platform, index) => (
-                            <GlareCard key={index} className="platform-glare-card">
-                                <div className="platform-card-content">
-                                    <div className="platform-icon-wrapper" style={{
-                                        background: index === 0 ? 'linear-gradient(135deg, #1877f2 0%, #3b5998 100%)' :
-                                            index === 1 ? 'linear-gradient(135deg, #4285f4 0%, #34a853 50%, #fbbc04 75%, #ea4335 100%)' :
-                                                'linear-gradient(135deg, #f58529 0%, #dd2a7b 50%, #8134af 100%)'
-                                    }}>
-                                        {platform.icon}
-                                    </div>
-                                    <h3 className="platform-card-title">{platform.title}</h3>
-                                    <p className="platform-card-description">{platform.description}</p>
-                                </div>
-                            </GlareCard>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            {/* Platform Integrations */}
+            <FeatureGrid
+                title="Works With Your Existing Platforms"
+                subtitle="Connect your ad accounts in seconds. Ryze AI supports all major advertising platforms."
+                features={platforms}
+                columns={3}
+                variant="cards"
+            />
 
             {/* AI Capabilities Showcase */}
             <section className="section ai-showcase-section">
@@ -313,32 +294,24 @@ export default function HomePage() {
                     </div>
 
                     <div className="comparison-grid">
-                        {/* Ryze AI - Premium GlareCard */}
-                        <GlareCard className="comparison-ryze-card">
-                            <div className="comparison-ryze-content">
-                                <div className="comparison-ryze-header">
-                                    <div className="ryze-icon-badge">
-                                        <Zap size={20} />
-                                    </div>
-                                    <h3>Ryze AI</h3>
-                                    <span className="recommended-badge">Recommended</span>
-                                </div>
-                                <ul className="ryze-features-list">
-                                    <li><span className="check-icon">✓</span> 24/7 automated campaign monitoring</li>
-                                    <li><span className="check-icon">✓</span> AI-powered creative generation</li>
-                                    <li><span className="check-icon">✓</span> Real-time budget optimization</li>
-                                    <li><span className="check-icon">✓</span> Instant actionable insights</li>
-                                    <li><span className="check-icon">✓</span> Scales with your ad spend</li>
-                                    <li><span className="check-icon">✓</span> Starts at ₹8,333/month</li>
-                                </ul>
-                            </div>
-                        </GlareCard>
-
+                        <div className="comparison-side ryze-side has-border-beam">
+                            <BorderBeam duration={12} lightWidth={250} lightColor="#10b981" />
+                            <h3>
+                                <Zap size={20} />
+                                Ryze AI
+                            </h3>
+                            <ul>
+                                <li>24/7 automated campaign monitoring</li>
+                                <li>AI-powered creative generation</li>
+                                <li>Real-time budget optimization</li>
+                                <li>Instant actionable insights</li>
+                                <li>Scales with your ad spend</li>
+                                <li>Starts at ₹8,333/month</li>
+                            </ul>
+                        </div>
                         <div className="comparison-divider">
                             <span>VS</span>
                         </div>
-
-                        {/* Traditional Agency - Simple Card */}
                         <div className="comparison-side agency-side">
                             <h3>
                                 <Users size={20} />

@@ -1,9 +1,11 @@
 /* Features Page Styles */
 .features-page {
     overflow-x: hidden;
-    /* Mobile performance optimizations */
-    transform: translateZ(0);
+    padding-top: 80px; /* Account for fixed navbar */
+    /* Advanced performance optimizations */
+    transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
+    contain: layout style;
 }
 
 .features-page .hero {
@@ -83,9 +85,10 @@
     align-items: center;
     justify-content: center;
     transition: all var(--transition-base);
-    /* Mobile performance optimizations */
-    transform: translateZ(0);
+    /* Advanced performance optimizations */
+    transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
+    contain: layout style paint;
 }
 
 .feature-visual-placeholder:hover {

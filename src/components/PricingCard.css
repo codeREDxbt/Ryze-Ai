@@ -9,10 +9,12 @@
     flex-direction: column;
     transition: all var(--transition-base);
     overflow: hidden;
-    /* Mobile performance optimizations */
-    transform: translateZ(0);
+    /* Advanced performance optimizations */
+    transform: translate3d(0, 0, 0);
     will-change: transform;
     backface-visibility: hidden;
+    contain: layout style paint;
+    content-visibility: auto;
 }
 
 /* Ensure all content is above BorderBeam */
@@ -23,7 +25,7 @@
 
 .pricing-card:hover {
     border-color: var(--text-muted);
-    transform: translateY(-4px);
+    transform: translate3d(0, -4px, 0);
     box-shadow: var(--shadow-xl);
 }
 

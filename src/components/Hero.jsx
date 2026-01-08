@@ -13,7 +13,21 @@ export default function Hero({
     variant = 'center', // 'center', 'left', 'split'
     showVideo = false,
     children,
+    onOpenDemo,
 }) {
+    const handlePrimaryClick = (e) => {
+        if (primaryCTA.action === 'demo' && onOpenDemo) {
+            e.preventDefault();
+            onOpenDemo();
+        }
+    };
+
+    const handleSecondaryClick = (e) => {
+        if (secondaryCTA.action === 'demo' && onOpenDemo) {
+            e.preventDefault();
+            onOpenDemo();
+        }
+    };
     return (
         <section className={`hero hero-${variant}`}>
             <div className="hero-bg">
@@ -44,11 +58,11 @@ export default function Hero({
                     )}
 
                     <div className="hero-ctas">
-                        <Link to={primaryCTA.link} className="btn btn-primary btn-lg">
+                        <Link to={primaryCTA.link || '#'} className="btn btn-primary btn-lg" onClick={handlePrimaryClick}>
                             {primaryCTA.text}
                             <ArrowRight size={18} aria-hidden="true" />
                         </Link>
-                        <Link to={secondaryCTA.link} className="btn btn-ghost btn-lg">
+                        <Link to={secondaryCTA.link || '#'} className="btn btn-ghost btn-lg" onClick={handleSecondaryClick}>
                             {showVideo && <Play size={18} aria-hidden="true" />}
                             {secondaryCTA.text}
                         </Link>

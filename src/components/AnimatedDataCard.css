@@ -8,6 +8,10 @@
     background: var(--card-bg);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
     transition: all 200ms ease-out;
+    /* Advanced performance optimizations */
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    contain: layout style paint;
 }
 
 .animated-data-card:hover {
@@ -92,13 +96,14 @@
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transform: translateY(100%);
+    transform: translate3d(0, 100%, 0);
     transition: all 500ms cubic-bezier(0.6, 0.6, 0, 1);
+    will-change: transform, opacity;
 }
 
 .animated-data-card:hover .data-visualization__overlay {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
 }
 
 /* Popup Info (Layer 2 - appears on hover) */
@@ -112,12 +117,13 @@
     width: 356px;
     padding: 16px;
     background: transparent;
-    transform: translateY(100%);
+    transform: translate3d(0, 100%, 0);
     transition: transform 500ms cubic-bezier(0.6, 0.6, 0, 1);
+    will-change: transform;
 }
 
 .animated-data-card:hover .data-visualization__popup {
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
 }
 
 .data-popup {

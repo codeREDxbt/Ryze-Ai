@@ -6,9 +6,10 @@
     display: flex;
     align-items: center;
     overflow: hidden;
-    /* Mobile performance optimizations */
-    transform: translateZ(0);
+    /* Advanced performance optimizations */
+    transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
+    contain: layout style;
 }
 
 /* Background Effects */

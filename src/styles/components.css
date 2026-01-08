@@ -54,7 +54,7 @@
 .btn-primary:hover:not(:disabled) {
     background: var(--accent-hover);
     box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
-    transform: translateY(-1px);
+    transform: translate3d(0, -1px, 0);
 }
 
 .btn-primary:active:not(:disabled) {
@@ -69,7 +69,7 @@
 
 .btn-secondary:hover:not(:disabled) {
     opacity: 0.9;
-    transform: translateY(-1px);
+    transform: translate3d(0, -1px, 0);
 }
 
 /* Ghost Button */
@@ -117,11 +117,15 @@
     border-radius: var(--radius-xl);
     padding: var(--space-6);
     transition: all var(--transition-base);
+    /* Advanced performance optimizations */
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    contain: layout style paint;
 }
 
 .card:hover {
     border-color: var(--text-muted);
-    transform: translateY(-2px);
+    transform: translate3d(0, -2px, 0);
     box-shadow: var(--shadow-lg);
 }
 
@@ -263,7 +267,7 @@
     position: absolute;
     bottom: 100%;
     left: 50%;
-    transform: translateX(-50%) translateY(-8px);
+    transform: translate3d(-50%, -8px, 0);
     padding: var(--space-2) var(--space-3);
     background: var(--text-color);
     color: var(--background);
@@ -274,12 +278,13 @@
     visibility: hidden;
     transition: all var(--transition-fast);
     z-index: var(--z-tooltip);
+    will-change: transform, opacity;
 }
 
 .tooltip:hover::after {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(-4px);
+    transform: translate3d(-50%, -4px, 0);
 }
 
 /* ===================================

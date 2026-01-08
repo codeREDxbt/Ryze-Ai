@@ -1,6 +1,7 @@
 /* Pricing Page Styles */
 .pricing-page {
     overflow-x: hidden;
+    padding-top: 80px; /* Account for fixed navbar */
 }
 
 .pricing-page .hero {

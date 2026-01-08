@@ -3,19 +3,25 @@ import FeatureGrid from '../components/FeatureGrid';
 import CTASection from '../components/CTASection';
 import ImageSplit from '../components/ImageSplit';
 import Visual1Card from '../components/Visual1Card';
+import Visual2Card from '../components/Visual2Card';
 import GlareCard from '../components/GlareCard';
 import {
     Zap,
     Brain,
     BarChart3,
+    Target,
     Sparkles,
     Shield,
     TrendingUp,
     RefreshCcw,
     Search,
+    ImagePlus,
     DollarSign,
+    LineChart,
+    Settings,
     Bell,
-    FileText
+    FileText,
+    Layers
 } from 'lucide-react';
 import './FeaturesPage.css';
 
@@ -43,37 +49,72 @@ export default function FeaturesPage() {
         },
     ];
 
-    // Consolidated features combining Analytics, Automation, and Reporting
-    const moreFeatures = [
-        {
-            icon: <BarChart3 size={24} />,
-            title: 'Advanced Analytics',
-            description: 'Predictive AI analytics, competitive benchmarking, and audience insights to drive smarter decisions.',
-        },
-        {
-            icon: <RefreshCcw size={24} />,
-            title: 'Smart Automation',
-            description: 'Auto bid management, rule-based automation, and smart alerts for hands-free optimization.',
-        },
-        {
-            icon: <FileText size={24} />,
-            title: 'Reporting & Insights',
-            description: 'Beautiful performance reports, ROI attribution, and real-time dashboards at your fingertips.',
-        },
+    const advancedFeatures = [
         {
             icon: <Search size={24} />,
             title: 'Keyword Intelligence',
             description: 'AI-powered keyword research and negative keyword management to maximize search relevance.',
         },
         {
+            icon: <Target size={24} />,
+            title: 'Audience Insights',
+            description: 'Deep analysis of audience segments to find your most profitable customer profiles.',
+        },
+        {
+            icon: <BarChart3 size={24} />,
+            title: 'Competitive Benchmarking',
+            description: 'See how your campaigns stack up against industry benchmarks and competitors.',
+        },
+        {
+            icon: <LineChart size={24} />,
+            title: 'Predictive Analytics',
+            description: 'AI forecasting to predict campaign performance and budget needs before they happen.',
+        },
+    ];
+
+    const automationFeatures = [
+        {
+            icon: <RefreshCcw size={24} />,
+            title: 'Auto Bid Management',
+            description: 'Dynamic bid adjustments based on real-time performance data and conversion likelihood.',
+        },
+        {
+            icon: <Settings size={24} />,
+            title: 'Rule-Based Automation',
+            description: 'Set custom rules and let Ryze AI execute changes based on your specific criteria.',
+        },
+        {
             icon: <Bell size={24} />,
-            title: 'Smart Alerts & Testing',
-            description: 'Instant notifications and automatic A/B testing with statistical significance analysis.',
+            title: 'Smart Alerts',
+            description: 'Get notified instantly when campaigns need attention or hit performance thresholds.',
+        },
+        {
+            icon: <Layers size={24} />,
+            title: 'A/B Testing Automation',
+            description: 'Automatic creative and audience testing with statistical significance analysis.',
+        },
+    ];
+
+    const reportingFeatures = [
+        {
+            icon: <FileText size={24} />,
+            title: 'Performance Reports',
+            description: 'Beautiful, actionable reports that highlight what\'s working and what needs fixing.',
         },
         {
             icon: <TrendingUp size={24} />,
             title: 'ROI Attribution',
             description: 'Clear visibility into which campaigns, creatives, and audiences drive real revenue.',
+        },
+        {
+            icon: <ImagePlus size={24} />,
+            title: 'Creative Analytics',
+            description: 'Deep dive into creative performance to understand what resonates with your audience.',
+        },
+        {
+            icon: <Zap size={24} />,
+            title: 'Real-Time Dashboard',
+            description: 'Live metrics and KPIs at your fingertips. No more waiting for reports.',
         },
     ];
 
@@ -200,29 +241,97 @@ export default function FeaturesPage() {
                 </div>
             </section>
 
-            {/* Combined Features Section - Premium GlareCards */}
-            <section className="section-alt premium-features-section">
+            {/* Advanced Features - Condensed to 2x2 */}
+            <section className="section-alt">
+                <FeatureGrid
+                    title="Advanced Analytics"
+                    subtitle="Deep insights to inform smarter decisions"
+                    features={advancedFeatures}
+                    columns={2}
+                    variant="cards"
+                />
+            </section>
+
+            {/* Animated Visual Section - Visual2Card */}
+            <section className="features-animated-section">
                 <div className="container">
-                    <div className="section-header">
-                        <h2>More Powerful Features</h2>
-                        <p>Analytics, automation, and reporting tools to supercharge your campaigns</p>
+                    <div className="section-intro">
+                        <h3>Smart Budget Intelligence</h3>
+                        <p>Intelligent budget allocation and ROI optimization</p>
                     </div>
-                    <div className="premium-features-grid">
-                        {moreFeatures.map((feature, index) => (
-                            <GlareCard key={index} className="premium-feature-card">
-                                <div className="premium-feature-content">
-                                    <div className="premium-feature-icon" style={{
-                                        background: `linear-gradient(135deg, ${['#10b981', '#6366f1', '#f59e0b', '#ec4899', '#8b5cf6', '#06b6d4'][index]} 0%, ${['#34d399', '#818cf8', '#fbbf24', '#f472b6', '#a78bfa', '#22d3ee'][index]} 100%)`
-                                    }}>
-                                        {feature.icon}
-                                    </div>
-                                    <h3 className="premium-feature-title">{feature.title}</h3>
-                                    <p className="premium-feature-description">{feature.description}</p>
-                                </div>
-                            </GlareCard>
-                        ))}
+                    <div className="animated-cards-grid reverse">
+                        <div className="animated-card-wrapper large">
+                            <Visual2Card mainColor="#f59e0b" secondaryColor="#8b5cf6" />
+                        </div>
+                        <div className="features-highlight">
+                            <h4>Automated Budget Optimization</h4>
+                            <ul>
+                                <li><Zap size={16} /> Hourly rebalancing</li>
+                                <li><Zap size={16} /> Auto-scale winning campaigns</li>
+                                <li><Zap size={16} /> Prevent wasted spend</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+            </section>
+
+            {/* Automation Features - Condensed to 2x2 */}
+            <FeatureGrid
+                title="Automation Suite"
+                subtitle="Set it and forget it optimization"
+                features={automationFeatures}
+                columns={2}
+                variant="cards"
+            />
+
+            {/* Animated Visual Section - GlareCard Showcase */}
+            <section className="features-animated-section">
+                <div className="container">
+                    <div className="section-intro">
+                        <h3>Creative Generation Excellence</h3>
+                        <p>AI-powered ad creative and messaging</p>
+                    </div>
+                    <div className="glare-cards-showcase">
+                        <div className="glare-card-item">
+                            <GlareCard>
+                                <div className="glare-content">
+                                    <Brain size={32} className="glare-icon" style={{color: '#10b981'}} />
+                                    <h4>Intelligent Headlines</h4>
+                                    <p>AI-generated headlines optimized for CTR and conversion</p>
+                                </div>
+                            </GlareCard>
+                        </div>
+                        <div className="glare-card-item">
+                            <GlareCard>
+                                <div className="glare-content">
+                                    <Sparkles size={32} className="glare-icon" style={{color: '#f59e0b'}} />
+                                    <h4>Copy Variations</h4>
+                                    <p>Endless ad copy variations tested and ranked by performance</p>
+                                </div>
+                            </GlareCard>
+                        </div>
+                        <div className="glare-card-item">
+                            <GlareCard>
+                                <div className="glare-content">
+                                    <ImagePlus size={32} className="glare-icon" style={{color: '#8b5cf6'}} />
+                                    <h4>Visual Assets</h4>
+                                    <p>Professional creative suggestions tailored to your brand</p>
+                                </div>
+                            </GlareCard>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Reporting Features - Condensed to 2x2 */}
+            <section className="section-alt">
+                <FeatureGrid
+                    title="Reporting & Insights"
+                    subtitle="Crystal clear visibility into performance"
+                    features={reportingFeatures}
+                    columns={2}
+                    variant="cards"
+                />
             </section>
 
             {/* CTA */}

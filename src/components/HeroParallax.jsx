@@ -7,7 +7,7 @@ import './HeroParallax.css';
  * HeroParallax - Parallax hero with scrolling product cards
  * Inspired by Aceternity UI
  */
-export default function HeroParallax({ products = [] }) {
+export default function HeroParallax({ products = [], onOpenDemo }) {
     const containerRef = useRef(null);
 
     const { scrollYProgress } = useScroll({
@@ -52,7 +52,7 @@ export default function HeroParallax({ products = [] }) {
             ref={containerRef}
             className="hero-parallax"
         >
-            <Header />
+            <Header onOpenDemo={onOpenDemo} />
             <motion.div
                 className="parallax-container"
                 style={{
@@ -82,7 +82,7 @@ export default function HeroParallax({ products = [] }) {
     );
 }
 
-function Header() {
+function Header({ onOpenDemo }) {
     return (
         <div className="parallax-header">
             <div className="parallax-header-content">
@@ -98,12 +98,12 @@ function Header() {
                     finds wasted spend, and optimizes performance automatically.
                 </p>
                 <div className="parallax-ctas">
-                    <Link to="/demo" className="btn btn-primary btn-lg">
+                    <button onClick={onOpenDemo} className="btn btn-primary btn-lg">
                         Book a Demo
-                    </Link>
-                    <Link to="/review" className="btn btn-ghost btn-lg">
+                    </button>
+                    <button onClick={onOpenDemo} className="btn btn-ghost btn-lg">
                         Free Ad Review
-                    </Link>
+                    </button>
                 </div>
 
                 {/* Trust Badges - Compact Row */}

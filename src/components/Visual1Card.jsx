@@ -72,22 +72,32 @@ export default function Visual1Card({ mainColor = '#8b5cf6', secondaryColor = '#
 }
 
 function Layer1({ mainColor, secondaryColor }) {
+    const Bars = () => (
+        <>
+            <path d="M8 178C8 176.343 9.34315 175 11 175H25C26.6569 175 28 176.343 28 178V180H8V178Z" fill={mainColor} />
+            <path d="M32 168C32 166.343 33.3431 165 35 165H49C50.6569 165 52 166.343 52 168V180H32V168Z" fill={secondaryColor} />
+            <path d="M67 173C67 171.343 68.3431 170 70 170H84C85.6569 170 87 171.343 87 173V180H67V173Z" fill={mainColor} />
+            <path d="M91 153C91 151.343 92.3431 150 94 150H108C109.657 150 111 151.343 111 153V180H91V153Z" fill={secondaryColor} />
+            <path d="M115 163C115 161.343 116.343 160 118 160H132C133.657 160 135 161.343 135 163V180H115V163Z" fill={mainColor} />
+            <path d="M126 142C126 140.343 127.343 139 129 139H143C144.657 139 146 140.343 146 142V180H126V142Z" fill={mainColor} />
+            <path d="M150 158C150 156.343 151.343 155 153 155H167C168.657 155 170 156.343 170 158V180H150V158Z" fill={secondaryColor} />
+            <path d="M187 133C187 131.343 188.343 130 190 130H204C205.657 130 207 131.343 207 133V180H187V133Z" fill={mainColor} />
+            <path d="M211 163C211 161.343 212.343 160 214 160H228C229.657 160 231 161.343 231 163V180H211V163Z" fill={secondaryColor} />
+        </>
+    );
+
     return (
         <div className="visual1-layer1">
-            <svg className="visual1-layer1__svg" viewBox="0 0 712 220" fill="none">
-                {/* Bar chart with much taller bars */}
-                <path d="M8 180C8 178.343 9.34315 177 11 177H25C26.6569 177 28 178.343 28 180V220H8V180Z" fill={mainColor} />
-                <path d="M32 140C32 138.343 33.3431 137 35 137H49C50.6569 137 52 138.343 52 140V220H32V140Z" fill={secondaryColor} />
-                <path d="M67 160C67 158.343 68.3431 157 70 157H84C85.6569 157 87 158.343 87 160V220H67V160Z" fill={mainColor} />
-                <path d="M91 90C91 88.343 92.3431 87 94 87H108C109.657 87 111 88.343 111 90V220H91V90Z" fill={secondaryColor} />
-                <path d="M115 120C115 118.343 116.343 117 118 117H132C133.657 117 135 118.343 135 120V220H115V120Z" fill={mainColor} />
-                <path d="M139 70C139 68.343 140.343 67 142 67H156C157.657 67 159 68.343 159 70V220H139V70Z" fill={mainColor} />
-                <path d="M163 100C163 98.343 164.343 97 166 97H180C181.657 97 183 98.343 183 100V220H163V100Z" fill={secondaryColor} />
-                <path d="M187 50C187 48.343 188.343 47 190 47H204C205.657 47 207 48.343 207 50V220H187V50Z" fill={mainColor} />
-                <path d="M211 130C211 128.343 212.343 127 214 127H228C229.657 127 231 128.343 231 130V220H211V130Z" fill={secondaryColor} />
-                <path d="M235 80C235 78.343 236.343 77 238 77H252C253.657 77 255 78.343 255 80V220H235V80Z" fill={mainColor} />
-                <path d="M259 150C259 148.343 260.343 147 262 147H276C277.657 147 279 148.343 279 150V220H259V150Z" fill={secondaryColor} />
-                <path d="M283 60C283 58.343 284.343 57 286 57H300C301.657 57 303 58.343 303 60V220H283V60Z" fill={mainColor} />
+            <svg className="visual1-layer1__svg" viewBox="0 0 712 180" fill="none">
+                <g>
+                    <Bars />
+                </g>
+                <g transform="translate(240, 0)">
+                    <Bars />
+                </g>
+                <g transform="translate(480, 0)">
+                    <Bars />
+                </g>
             </svg>
         </div>
     );

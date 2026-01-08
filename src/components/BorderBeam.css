@@ -10,9 +10,10 @@
     border-radius: inherit;
     overflow: hidden;
     z-index: 0;
-    /* Mobile performance optimizations */
-    transform: translateZ(0);
+    /* Advanced performance optimizations */
+    transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
+    contain: strict;
 }
 
 /* The rotating gradient beam */
@@ -28,9 +29,9 @@
             transparent 120deg);
     animation: borderBeamRotate var(--duration, 10s) linear infinite;
     animation-delay: var(--delay, 0s);
-    /* Mobile performance optimizations */
+    /* Advanced performance optimizations */
     will-change: transform;
-    transform: translateZ(0);
+    transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
 }
 

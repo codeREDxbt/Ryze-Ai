@@ -8,17 +8,13 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: var(--z-sticky);
+    z-index: 9999; /* Keep navbar above all content */
     display: flex;
     justify-content: center;
     pointer-events: none;
     padding: 0;
     /* Smooth spring-like easing for a more natural feel */
     transition: padding 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    /* Mobile performance optimizations */
-    transform: translateZ(0);
-    will-change: padding;
-    backface-visibility: hidden;
 }
 
 .resizable-navbar.scrolled {
@@ -44,10 +40,6 @@
         background 0.4s ease,
         border 0.3s ease 0.1s,
         padding 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    /* Mobile performance optimizations */
-    transform: translateZ(0);
-    will-change: max-width, border-radius;
-    backface-visibility: hidden;
 }
 
 .navbar-scrolled {
@@ -93,7 +85,8 @@
     color: var(--text-color);
     cursor: pointer;
     transition: all var(--transition-base);
-    transform: scale(1);
+    transform: scale3d(1, 1, 1);
+    will-change: transform, opacity;
 }
 
 .navbar-logo:hover {
@@ -149,7 +142,7 @@
 .nav-item:hover {
     color: var(--text-color);
     background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-1px);
+    transform: translate3d(0, -1px, 0);
 }
 
 .nav-item:hover::after {
@@ -253,7 +246,7 @@
 
 .navbar-button-primary:hover {
     background: var(--accent-hover);
-    transform: translateY(-2px);
+    transform: translate3d(0, -2px, 0);
     box-shadow: 0 4px 16px rgba(16, 185, 129, 0.5),
         0 0 24px rgba(16, 185, 129, 0.25);
 }

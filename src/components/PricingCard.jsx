@@ -14,7 +14,14 @@ export default function PricingCard({
     cta = { text: 'Get Started', link: '/demo' },
     isPopular = false,
     isEnterprise = false,
+    onOpenDemo,
 }) {
+    const handleCTAClick = (e) => {
+        if (cta.action === 'demo' && onOpenDemo) {
+            e.preventDefault();
+            onOpenDemo();
+        }
+    };
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
@@ -65,8 +72,9 @@ export default function PricingCard({
             )}
 
             <Link
-                to={cta.link}
+                to={cta.link || '#'}
                 className={`btn ${isPopular ? 'btn-primary' : 'btn-ghost'} btn-lg pricing-cta`}
+                onClick={handleCTAClick}
             >
                 {cta.text}
             </Link>

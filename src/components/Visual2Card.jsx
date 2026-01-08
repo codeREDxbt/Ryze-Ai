@@ -109,14 +109,14 @@ export default function Visual2Card({ mainColor = '#8b5cf6', secondaryColor = '#
             <div className="visual2-card__labels" style={{ opacity: hovered ? 0 : 1, transition: 'opacity 300ms ease-in-out' }}>
                 {['Google', 'Meta', 'TikTok', 'LinkedIn', 'Amazon'].map((platform, idx) => {
                     const angle = (idx * 72 - 90) * Math.PI / 180;
-                    const distance = 75;
+                    const distance = 90;
                     return (
-                        <div
-                            key={idx}
-                            className="visual2-label"
-                            style={{
-                                transform: hovered
-                                    ? `translate(${Math.cos(angle) * distance * 1.3}px, ${Math.sin(angle) * distance * 1.3}px)`
+                        <div 
+                            key={idx} 
+                            className="visual2-label" 
+                            style={{ 
+                                transform: hovered 
+                                    ? `translate(${Math.cos(angle) * distance * 1.3}px, ${Math.sin(angle) * distance * 1.3}px)` 
                                     : `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`,
                                 opacity: hovered ? 0 : 1
                             }}
